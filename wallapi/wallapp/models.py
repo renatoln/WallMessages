@@ -25,7 +25,7 @@ class Disciplina(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     codigo = models.CharField(max_length=20, blank=True, null=True)
     nome = models.CharField(max_length=100, blank=True, null=True)
-    professor = models.ForeignKey(Usuario, blank=True, null=False, related_name='data_professor')
+    professor = models.ForeignKey(Usuario, blank=True, null=False, related_name='data_professor', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.codigo  + ' - ' + self.nome  + ' - ' + self.professor.nome
@@ -35,8 +35,8 @@ class Disciplina(models.Model):
 
 class Disciplina_Alunos(models.Model):
     id =  models.AutoField(primary_key=True, blank=False, null=False)
-    disciplina = models.ForeignKey(Disciplina, blank=False, null=False, related_name='data_disciplina')
-    estudante = models.ForeignKey(Usuario, blank=False, null=False, related_name='data_estudante')
+    disciplina = models.ForeignKey(Disciplina, blank=False, null=False, related_name='data_disciplina', on_delete=models.CASCADE)
+    estudante = models.ForeignKey(Usuario, blank=False, null=False, related_name='data_estudante', on_delete=models.CASCADE)
     #grade = models.IntegerField(null=True)
     #__table_args__ = (db.UniqueConstraint('course_section_id','user_id', name='course_section_user_uc'),)
 
@@ -50,7 +50,7 @@ class Disciplina_Alunos(models.Model):
 class Mensagem(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     data = models.DateTimeField(null=True, default=timezone.now)
-    remetente = models.ForeignKey(Usuario, blank=False, null=False, related_name='data_sender_who')
+    remetente = models.ForeignKey(Usuario, blank=False, null=False, related_name='data_sender_who', on_delete=models.CASCADE)
     destinatario = models.ManyToManyField(Usuario,blank=False, related_name='message_destinations')
     titulo = models.CharField(max_length=50, blank=False, null=False)
     texto = models.TextField()
