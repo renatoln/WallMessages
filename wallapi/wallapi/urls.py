@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from wallapp import views
+
 
 urlpatterns = [
     url(r'^', include('wallapp.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^mensagens_por_usuario/(?P<destinatario>[0-9]+)/$', views.MensagensPorUsuario.as_view()),
 ]

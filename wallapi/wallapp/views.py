@@ -5,6 +5,8 @@ from .models import Usuario, Disciplina, Disciplina_Alunos, Mensagem
 from .serializers import UsuarioSerializer, DisciplinaSerializer, Disciplina_AlunosSerializer, MensagemSerializer
 from rest_framework import generics
 from django_filters import rest_framework as filters
+from rest_framework.views import APIView
+from rest_framework.response import Response
 #from rest_framework.authentication import SessionAuthentication
 #from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 
@@ -94,3 +96,11 @@ class MensagemDetail(generics.RetrieveUpdateDestroyAPIView):
     #permission_classes = (IsAuthenticated, )
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = '__all__'
+
+class MensagensPorUsuario(APIView):
+    #permission_classes = (AllowAny,)
+
+    def get(self, request, destinatario, format=None):
+        mensagens = Mensagem.objects.filter(destinatario__in=[destinatario])
+        serializer = MensagemSerializer(mensagens, many=True)
+        return Response(serializer.data)

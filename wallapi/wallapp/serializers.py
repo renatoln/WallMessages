@@ -32,4 +32,4 @@ class MensagemSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Mensagem
-        fields = '__all__'
+        fields = '__all__'       
