@@ -56,7 +56,7 @@ class Mensagem(models.Model):
     texto = models.TextField()
 
     def __str__(self):
-        return self.message
+        return self.texto
 
     class Meta:
         db_table = 'mensagem'
